@@ -23,7 +23,7 @@ enum EncoderError: Error {
 /// Represents different types of embeddings as arrays of different numeric types.
 public enum Embedding {
     case i32s([Int32])
-    case f16s([Float16])
+    // case f16s([Float16])
     case f32s([Float32])
     case f64s([Float64])
 
@@ -50,15 +50,15 @@ public enum Embedding {
                     )
                 )
             )
-        case .float16:
-            self = .f16s(
-                Array(
-                    UnsafeBufferPointer(
-                        start: multiArray.dataPointer.assumingMemoryBound(to: Float16.self),
-                        count: Int(truncating: multiArray.shape[1])
-                    )
-                )
-            )
+        // case .float16:
+        //     self = .f16s(
+        //         Array(
+        //             UnsafeBufferPointer(
+        //                 start: multiArray.dataPointer.assumingMemoryBound(to: Float16.self),
+        //                 count: Int(truncating: multiArray.shape[1])
+        //             )
+        //         )
+        //     )
         case .int32:
             self = .i32s(
                 Array(
