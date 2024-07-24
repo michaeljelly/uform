@@ -7,7 +7,7 @@ let package = Package(
         // Linux doesn't have to be explicitly listed
         .iOS(.v16),  // For iOS, version 13 and later
         .tvOS(.v16),  // For tvOS, version 13 and later
-        .macOS(.v13),  // For macOS, version 10.15 (Catalina) and later
+        .macOS(.v12),  // For macOS, version 10.15 (Catalina) and later
         .watchOS(.v6),  // For watchOS, version 6 and later
     ],
     products: [
