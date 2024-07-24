@@ -78,7 +78,7 @@ public enum Embedding {
         switch self {
         case .f32s(let array): return array
         case .i32s(let array): return array.map(Float.init)
-        case .f16s(let array): return array.map(Float.init)
+        // case .f16s(let array): return array.map(Float.init)
         case .f64s(let array): return array.map(Float.init)
         }
     }
