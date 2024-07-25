@@ -112,8 +112,8 @@ func readModel(fromPath path: String) throws -> MLModel {
 
 /// Encodes text input into embeddings using a machine learning model.
 public class TextEncoder {
-    let model: MLModel
-    let processor: TextProcessor
+    public let model: MLModel
+    public let processor: TextProcessor
 
     /// Initializes a `TextEncoder` using paths for the model and configuration.
     /// - Parameters:
@@ -154,11 +154,15 @@ public class TextEncoder {
     /// - Returns: An `Embedding` object containing the model output.
     public func encode(_ text: String) throws -> Embedding {
         let inputFeatureProvider = try self.processor.preprocess(text)
+        
         guard let prediction = try? self.model.prediction(from: inputFeatureProvider),
-            let predictionFeature = prediction.featureValue(for: "embeddings"),
+            let predictionFeature = prediction.featureValue(for: "embeddings") ??  prediction.featureValue(for: "pooler_output"),
             let output = predictionFeature.multiArrayValue,
             let embedding = Embedding(from: output)
         else {
+            print("preprocessed")
+            print(prediction)
+            print(inputFeatureProvider)
             throw EncoderError.modelPredictionFailed("Failed to extract embeddings or unsupported data type.")
         }
         return embedding
