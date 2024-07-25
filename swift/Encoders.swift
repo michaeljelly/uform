@@ -155,10 +155,15 @@ public class TextEncoder {
     public func encode(_ text: String) throws -> Embedding {
         let inputFeatureProvider = try self.processor.preprocess(text)
         
-        guard let prediction = try? self.model.prediction(from: inputFeatureProvider),
-            let predictionFeature = prediction.featureValue(for: "embeddings") ??  prediction.featureValue(for: "pooler_output"),
-            let output = predictionFeature.multiArrayValue,
-            let embedding = Embedding(from: output)
+        guard let prediction = try? self.model.prediction(from: inputFeatureProvider) else {            throw EncoderError.modelPredictionFailed("Failed to create prediction.")
+}
+           guard let predictionFeature = prediction.featureValue(for: "embeddings") ??  prediction.featureValue(for: "pooler_output") else {
+               throw EncoderError.modelPredictionFailed("Failed to get features from prediction.")
+           }
+          guard  let output = predictionFeature.multiArrayValue else {
+               throw EncoderError.modelPredictionFailed("Failed to get multiArrayValue from prediction feature.")
+           }
+            guard let embedding = Embedding(from: output) 
         else {
             print("preprocessed")
             print(prediction)
