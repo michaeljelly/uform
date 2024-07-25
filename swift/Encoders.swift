@@ -217,7 +217,7 @@ public class ImageEncoder {
 // MARK: - Processors
 
 /// Handles the preprocessing of text data to be used by a machine learning model.
-class TextProcessor {
+public class TextProcessor {
     let tokenizer: Tokenizer
     let minContextLength: Int
     let maxContextLength: Int
